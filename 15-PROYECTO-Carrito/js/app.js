@@ -15,6 +15,12 @@ function cargarEventListeners() {
     //Elimina cursos del carrito
     carrito.addEventListener('click', eliminarCurso);
 
+    //Muestra los cursos de LocalStorage
+    document.addEventListener('DOMContentLoaded',() =>{
+        articulosCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        carritoHTML();
+    })
+
     //Vaciar el carrito
     vaciarCarritoBtn.addEventListener('click', () => {
         articulosCarrito = [];//reseteamos el arreglo
@@ -117,6 +123,9 @@ function carritoHTML() {
         //Agrega el HTML del carrito en el tbody
         contenedorCarrito.appendChild(row);
     });
+
+    //Agregar al storage
+    sincronizarStorage();
 }
 
 //Elimina los cursos del tbody
@@ -131,5 +140,8 @@ function limpiarHTML() {
         contenedorCarrito.removeChild(contenedorCarrito.firstChild);
 
     }
+}
 
+function sincronizarStorage(){
+    localStorage.setItem('carrito', JSON.stringify(articulosCarrito));
 }
